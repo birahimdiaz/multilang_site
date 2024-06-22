@@ -1,0 +1,37 @@
+<!-- templates/main/chatbot.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatbot</title>
+</head>
+<body>
+    <h1>Chatbot</h1>
+    <form id="chat-form">
+        <input type="text" id="input-text" name="input_text" placeholder="Posez votre question ici..." required>
+        <button type="submit">Envoyer</button>
+    </form>
+    <div id="chat-response"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#chat-form').on('submit', function(event) {
+                event.preventDefault();
+                var formData = $(this).serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "chatbot_view" %}',
+                    data: formData,
+                    success: function(response) {
+                        $('#chat-response').append('<p><strong>Bot:</strong> ' + response.response + '</p>');
+                        $('#input-text').val('');
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from django.utils.translation import gettext_lazy as _
+import os
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -55,7 +58,10 @@ ROOT_URLCONF = 'multilang_site.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            # Ajoutez ici les chemins vers vos répertoires de templates
+            os.path.join(BASE_DIR, 'main', 'templates'),  # Exemple de chemin
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -103,8 +109,26 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
+LANGUAGES = [
+    ('en', _('English')),
+    ('fr', _('French')),
+]
 
-LANGUAGE_CODE = 'en-us'
+# Ajouter le middleware de traduction
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',  # Ajout du middleware de localisation
+]
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),
+]
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'UTC'
 

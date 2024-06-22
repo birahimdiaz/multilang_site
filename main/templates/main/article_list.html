@@ -1,16 +1,19 @@
+{% load static %}
+{% load i18n %}
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Liste des Articles</title>
+    <title>{% trans "List of Articles" %}</title>
 </head>
 <body>
-    <h1>Liste des Articles</h1>
+    <h1>{% trans "List of Articles" %}</h1>
+
     <ul>
         {% for article in articles %}
             <li>
                 <h2>{{ article.title }}</h2>
                 <p>{{ article.content }}</p>
-                <small>Publié le : {{ article.publication_date }}</small>
             </li>
         {% endfor %}
     </ul>
